@@ -1,29 +1,28 @@
 package br.lanche.dominio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.util.CollectionUtils;
-
-import br.lanche.negocio.LancheCardapio;
 
 /**
  * Entidade que representa a opção do cardápio
  * com a composição dos seus ingredientes
  * @author Herivelton
  */
-public class OpcaoCardapio implements LancheCardapio{
+public class OpcaoCardapio{
+	
+	/** Constantes para auxiliar na leitura do código **/
+	public final static int X_BACON = 1;
+	public final static int X_BURGUER = 2;
+	public final static int X_EGG = 3;
+	public final static int X_EGG_BACON = 4;
 	
 	private int id; 
 	private String descricao;
-	/** Ingredientes base para composição **/
-	private List<Ingrediente> ingredientes;
-	/** valor unitário da opção **/
+	/** Valor final considerando as promoções **/
 	private double valor; 
-	
-	private List<OpcaoIngrediente> ingredientesExtras;
+	/** Variável criada para guardar o valor original sem desconto **/
+	private double valorOriginal;
+	private List<OpcaoIngrediente> ingredientes;
 	
 	public OpcaoCardapio() {
 		ingredientes = new ArrayList<>();
@@ -46,33 +45,23 @@ public class OpcaoCardapio implements LancheCardapio{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public List<Ingrediente> getIngredientes() {
+	public List<OpcaoIngrediente> getIngredientes() {
 		return ingredientes;
 	}
-	public void setIngredientes(List<Ingrediente> ingredientes) {
+	public void setIngredientes(List<OpcaoIngrediente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
-  
+	public double getValorOriginal() {
+		return valorOriginal;
+	}
+	public void setValorOriginal(double valorOriginal) {
+		this.valorOriginal = valorOriginal;
+	}
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
 	public double getValor() {
 		return valor;
-	}
-	
-	public List<OpcaoIngrediente> getIngredientesExtras() {
-		return ingredientesExtras;
-	}
-	public void setIngredientesExtras(List<OpcaoIngrediente> ingredientesExtras) {
-		this.ingredientesExtras = ingredientesExtras;
-	}
-	
-	@Override
-	public OpcaoCardapio addIngrediente(Ingrediente ingrediente) {
-		if(this.ingredientes == null)
-			ingredientes = new ArrayList<>();
-		this.ingredientes.add(ingrediente);
-		return this;
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package br.lanche.negocio.promocao;
 
 import br.lanche.dominio.OpcaoCardapio;
+import br.lanche.dominio.OpcaoIngrediente;
 
 /**
  * Implementação da classe de contexto do
@@ -15,8 +16,8 @@ public class Promocao {
 		this.strategy = strategy;
 	}
 	
-	public double getPrecoComDesconto(OpcaoCardapio opcao){
-		return strategy.calcularValorLanche(opcao);
+	public double getPrecoComDesconto(OpcaoIngrediente opcaoIngrediente, OpcaoCardapio lanche){
+		return strategy.calcularValorLanche(opcaoIngrediente, lanche);
 	}
 	
 	/**

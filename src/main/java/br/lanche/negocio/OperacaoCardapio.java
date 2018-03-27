@@ -1,8 +1,8 @@
 package br.lanche.negocio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import br.lanche.dominio.Ingrediente;
@@ -22,58 +22,80 @@ import br.lanche.negocio.promocao.PromocaoQueijo;
 public class OperacaoCardapio {
 
 	public static void main (String args[]){
-		List<LancheCardapio> lanches = CardapioBuilder.montarLanches();
+		gerarPedidosComIngredientes();
+	}
+
+	private static void gerarPedidosComIngredientes() {
+		Map<Integer, OpcaoCardapio> lanches = CardapioBuilder.montarLanches();
 		Map<Integer, Ingrediente> ingredientes = CardapioBuilder.montarIngredientes();
-		OpcaoCardapio opcao = (OpcaoCardapio) lanches.get(0);
-		OpcaoCardapio opcao2 = (OpcaoCardapio) lanches.get(0);
-		OpcaoCardapio opcao3 = (OpcaoCardapio) lanches.get(0);
 		
-		adicionarIngredienteExtraAOpcao(ingredientes.get(Ingrediente.QUEIJO), 1, opcao);
-		adicionarIngredienteExtraAOpcao(ingredientes.get(Ingrediente.QUEIJO), 2, opcao2);
-		adicionarIngredienteExtraAOpcao(ingredientes.get(Ingrediente.OVO), 3, opcao3);
+		
+		/** Recupera um item do cardápio e adiciona mais ingredientes  **/
+		adicionarIngrediente(ingredientes.get(Ingrediente.QUEIJO), 1, lanches.get(OpcaoCardapio.X_BACON));
+		adicionarIngrediente(ingredientes.get(Ingrediente.QUEIJO), 2, lanches.get(OpcaoCardapio.X_BACON));
+		adicionarIngrediente(ingredientes.get(Ingrediente.OVO), 3, lanches.get(OpcaoCardapio.X_BURGUER));
+		
 		
 		Pedido pedido = new Pedido();
-		addOpcaoAoPedido(opcao, pedido);
-		
+		/** Adiciona um item do cardápio ao pedido **/
+		adicionarOpcaoAoPedido(lanches.get(OpcaoCardapio.X_BACON), pedido);
+		adicionarOpcaoAoPedido(lanches.get(OpcaoCardapio.X_BACON), pedido);
+		adicionarOpcaoAoPedido(lanches.get(OpcaoCardapio.X_BACON), pedido);
+		/** Cria uma nova opção customizada para adicionar ao pedido **/
+		adicionarOpcaoAoPedido(criarMontarMeuHamburguer(ingredientes.get(Ingrediente.QUEIJO)), pedido);
+	}
+
+	/** Cria o hamburguer customizado pelo cliente **/
+	private static OpcaoCardapio criarMontarMeuHamburguer(Ingrediente...opcaoIngrediente){
+		OpcaoCardapio opcaoNova = new OpcaoCardapio();
+		opcaoNova.setDescricao("Hamburguer Feliz");
+		for (Ingrediente ingrediente : Arrays.asList(opcaoIngrediente)) {
+			 adicionarIngrediente(ingrediente, 1, opcaoNova);
+		}
+		return opcaoNova;
 	}
 	
+	/*** Método responsável por fazer a adição da opção do cardápio ao pedido do cliente */
+	private static Pedido adicionarOpcaoAoPedido(OpcaoCardapio opcao, Pedido pedido) {
+		if(pedido.getOpcoes() == null)
+			pedido.setOpcoes(new ArrayList<>());
+		pedido.getOpcoes().add(opcao);
+		pedido.setNumero(1);
+		pedido.setDataCadastro(new Date());
+		pedido.setValorTotal(pedido.getValorTotal()+opcao.getValor());
+		
+		for (OpcaoCardapio obj : pedido.getOpcoes()) {
+			System.out.println(obj.getDescricao()+" - "+obj.getValor()+" foi adicionada ao seu pedido.");
+		}
+		System.out.println("Valor Total do Lanche:"+pedido.getValorTotal());
+		return pedido;
+	}
 	
 	/***
 	 * Cria a entidade associativa do ingrediente com a opção e vincula com a opcaoCardapio
 	 */
-	public static void adicionarIngredienteExtraAOpcao(Ingrediente ingrediente, int qnt, OpcaoCardapio opcao){
-		OpcaoIngrediente opcaoIngrediente = new OpcaoIngrediente();
-			opcaoIngrediente.setOpcaoCardapio(opcao);
-			opcaoIngrediente.setIngrediente(ingrediente);
-			opcaoIngrediente.setQuantidade(qnt);
-			
-			if(opcao.getIngredientesExtras() == null)
-				opcao.setIngredientesExtras(new ArrayList<>());
-			opcao.getIngredientesExtras().add(opcaoIngrediente);
-			System.out.println("Adicionado Ingrediente Extra: ("+opcaoIngrediente.getQuantidade()+") "
-					+ ""+ingrediente.getDescricao()+" para a Opção: "+opcao.getDescricao());
-	}
-
-    /**
-     * Adiciona a opção ao pedido
-     * @param opcao
-     */
-	private static List<Pedido> addOpcaoAoPedido(OpcaoCardapio opcao, Pedido pedido) {
-		
-		pedido.setOpcoes(new ArrayList<OpcaoCardapio>());
-		pedido.getOpcoes().add(opcao);
-		pedido.setNumero(1);
-		pedido.setDataCadastro(new Date());
-		pedido.setValorTotal(pedido.getValorTotal());
-		
-		List<Pedido> todosPedidos = new ArrayList<Pedido>();
-		todosPedidos.add(pedido);
-		
-		for (Pedido obj : todosPedidos) {
-			System.out.print(""+obj.getOpcoes().size()+" opções foi adicionada ao seu pedido.");
+	public static void adicionarIngrediente(Ingrediente ingrediente, int qnt, OpcaoCardapio lanche){
+		boolean existeIngrediente = false;
+		if(lanche.getIngredientes() == null)
+			lanche.setIngredientes(new ArrayList<OpcaoIngrediente>());
+		for (OpcaoIngrediente opIngrediente : lanche.getIngredientes()) {
+			lanche.setValorOriginal(opIngrediente.getValorTotal());
+			//se o ingrediente já foi adicionado no lanche, atualiza apenas o valor da quantidade
+			if(opIngrediente.getIngrediente().getId() == ingrediente.getId()){
+				opIngrediente.setQuantidade(opIngrediente.getQuantidade()+qnt);
+				lanche.setValor(lanche.getValor()+(ingrediente.getValor() * qnt));
+				existeIngrediente = true;
+				break;
+			}
+		}
+		//se não tiver adicionado ainda o ingrediente
+		if(!existeIngrediente){
+		  lanche.getIngredientes().add(new OpcaoIngrediente(lanche, ingrediente, qnt));
+		  lanche.setValor(lanche.getValor() + (ingrediente.getValor() * qnt));
 		}
 		
-		return todosPedidos;
+		//calcula o valor da promoção do lanche
+		calcularPromocaoDesconto(lanche);
 	}
 	
 	
@@ -82,20 +104,33 @@ public class OperacaoCardapio {
 	 * de acordo com o tipo definido
 	 * @param opcao
 	 */
-	public void calcularPromocaoDesconto(OpcaoCardapio opcao){
-		for (OpcaoIngrediente item : opcao.getIngredientesExtras()) {
+	private static void calcularPromocaoDesconto(OpcaoCardapio lanche){
+		boolean possuiAlface = false;
+		boolean possuiBacon = false;
+		for (OpcaoIngrediente item : lanche.getIngredientes()) {
 			
 			if(item.getIngrediente().getId() == Ingrediente.HAMBURGUER){
-				opcao.setValor(new Promocao(new PromocaoCarne()).getPrecoComDesconto(item.getOpcaoCardapio()));
-			
-			}else if(item.getIngrediente().getId() == Ingrediente.QUEIJO){
-				opcao.setValor(new Promocao(new PromocaoQueijo()).getPrecoComDesconto(item.getOpcaoCardapio()));
-			
-			}else if(item.getIngrediente().getId() == Ingrediente.ALFACE){
-				opcao.setValor(new Promocao(new PromocaoLight()).getPrecoComDesconto(item.getOpcaoCardapio()));
+				Promocao promocaoCarne = new Promocao(new PromocaoCarne());
+				item.setValorDesconto(promocaoCarne.getPrecoComDesconto(item, lanche));
 			}
+			else if(item.getIngrediente().getId() == Ingrediente.QUEIJO){
+				Promocao promocaoQueijo = new Promocao(new PromocaoQueijo());
+				item.setValorDesconto(promocaoQueijo.getPrecoComDesconto(item, lanche));
+			}
+			// verifica se tem alface ou bacon entre os ingredientes 
+			else if(item.getIngrediente().getId() == Ingrediente.ALFACE)
+				possuiAlface = true;
+			else if(item.getIngrediente().getId() == Ingrediente.BACON)
+				possuiBacon = true;
 			
 		}
+		
+		//desconto será em cima do valor total do lanche 
+		if(possuiAlface && !possuiBacon){
+		 Promocao promocaoLight = new Promocao(new PromocaoLight());
+		 lanche.setValor(promocaoLight.getPrecoComDesconto(null, lanche));
+		}
+		
 	}
 	
 }

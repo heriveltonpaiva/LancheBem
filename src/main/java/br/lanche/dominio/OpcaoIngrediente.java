@@ -11,6 +11,15 @@ public class OpcaoIngrediente {
 	private OpcaoCardapio opcaoCardapio;
 	private Ingrediente ingrediente;
 	private int quantidade;
+	private double valorDesconto;
+	public OpcaoIngrediente() {
+	}
+	
+	public OpcaoIngrediente(OpcaoCardapio opcao, Ingrediente ingrediente, int qnt) {
+		this.opcaoCardapio = opcao;
+		this.ingrediente = ingrediente;
+		this.quantidade = qnt;
+	}
 	
 	public OpcaoCardapio getOpcaoCardapio() {
 		return opcaoCardapio;
@@ -30,5 +39,18 @@ public class OpcaoIngrediente {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
+	public void setValorDesconto(double valorDesconto) {
+		this.valorDesconto = valorDesconto;
+	}
+	public double getValorDesconto() {
+		return valorDesconto;
+	}
+	public double getValorTotal() {
+		return ingrediente.getValor() * quantidade;
+	}
 	
+	@Override
+	public String toString() {
+		return quantidade+" "+getIngrediente().getDescricao()+" R$: "+getValorTotal();
+	}
 }

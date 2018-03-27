@@ -1,17 +1,32 @@
 package br.lanche.negocio;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import br.lanche.dominio.Ingrediente;
 import br.lanche.dominio.OpcaoCardapio;
 
+/**
+ * Builder Responsável por montar o cardápio
+ * @author Herivelton
+ *
+ */
 public class CardapioBuilder {
 
 	public static void main (String[] args){
 		imprimirConsoleLanches();
+	}
+	
+	/** Método criado para impressão das opções do cardápio no console **/
+	private static void imprimirConsoleLanches(){
+		System.out.println("========================= CARDÁPIO DO LANCHE BEM  =========================");
+		for (OpcaoCardapio opcao : montarLanches().values()) {
+			System.out.println("OPÇÃO "+opcao.getId()+": "+opcao.getDescricao()+" R$: "+opcao.getValor());
+			System.out.println("Ingredientes:");
+			opcao.getIngredientes().stream().forEach(ingrediente -> System.out.println(""+ingrediente+","));
+			System.out.println("_________________________________________________________________________");
+
+		}
 	}
 	
 	/**
@@ -20,36 +35,47 @@ public class CardapioBuilder {
 	 * Optei por criar um mapa de ingredientes e adiciona-los
 	 * na sua criação para reduzir o código e facilitar a leitura.
 	 */
-	public static List<LancheCardapio> montarLanches(){
+	public static Map<Integer,OpcaoCardapio> montarLanches(){
 		Map<Integer, Ingrediente> mapa = montarIngredientes();
-		List<LancheCardapio> lista = new ArrayList<>();
+		Map<Integer, OpcaoCardapio> cardapio = new HashMap<>();
 		
-		lista.add(new OpcaoCardapio(1, "X-Bacon")
-				.addIngrediente(mapa.get(Ingrediente.BACON))
-				.addIngrediente(mapa.get(Ingrediente.HAMBURGUER))
-				.addIngrediente(mapa.get(Ingrediente.QUEIJO)));
+		Ingrediente hamburguer = mapa.get(Ingrediente.HAMBURGUER);
+		Ingrediente bacon = mapa.get(Ingrediente.BACON);
+		Ingrediente queijo = mapa.get(Ingrediente.QUEIJO);
+		Ingrediente ovo = mapa.get(Ingrediente.OVO);
 		
-		lista.add(new OpcaoCardapio(2, "X-Burger")
-				.addIngrediente(mapa.get(Ingrediente.HAMBURGUER))
-				.addIngrediente(mapa.get(Ingrediente.QUEIJO)));
+		int quantidade = 1;
+		OpcaoCardapio xBacon = new OpcaoCardapio(1, "X-Bacon");
 		
-		lista.add(new OpcaoCardapio(3, "X-Egg")
-				.addIngrediente(mapa.get(Ingrediente.OVO))
-				.addIngrediente(mapa.get(Ingrediente.HAMBURGUER))
-				.addIngrediente(mapa.get(Ingrediente.QUEIJO)));
+		OperacaoCardapio.adicionarIngrediente(bacon, quantidade, xBacon);
+		OperacaoCardapio.adicionarIngrediente(hamburguer, quantidade, xBacon);
+		OperacaoCardapio.adicionarIngrediente(queijo, quantidade, xBacon);
 		
-		lista.add(new OpcaoCardapio(4, "X-Egg Bacon")
-				.addIngrediente(mapa.get(Ingrediente.OVO))
-				.addIngrediente(mapa.get(Ingrediente.BACON))
-				.addIngrediente(mapa.get(Ingrediente.HAMBURGUER))
-				.addIngrediente(mapa.get(Ingrediente.QUEIJO)));
+		OpcaoCardapio xBurguer =  new OpcaoCardapio(2, "X-Burger");
 		
-		return lista;
-	}
-	
-	/** Método criado para impressão das opções do cardápio no console **/
-	private static void imprimirConsoleLanches(){
-		montarLanches().stream().forEach(opcaoCardapio -> System.out.println(opcaoCardapio));
+		OperacaoCardapio.adicionarIngrediente(queijo, quantidade, xBurguer);
+		OperacaoCardapio.adicionarIngrediente(hamburguer, quantidade, xBurguer);
+		
+		OpcaoCardapio xEgg =  new OpcaoCardapio(3, "X-Egg");
+		
+		OperacaoCardapio.adicionarIngrediente(queijo, quantidade, xEgg);
+		OperacaoCardapio.adicionarIngrediente(hamburguer, quantidade, xEgg);
+		OperacaoCardapio.adicionarIngrediente(ovo, quantidade, xEgg);
+		
+		OpcaoCardapio xEggBacon =  new OpcaoCardapio(4, "X-Egg Bacon");
+		
+		OperacaoCardapio.adicionarIngrediente(queijo, quantidade, xEggBacon);
+		OperacaoCardapio.adicionarIngrediente(hamburguer, quantidade, xEggBacon);
+		OperacaoCardapio.adicionarIngrediente(ovo, quantidade, xEggBacon);
+		OperacaoCardapio.adicionarIngrediente(bacon, quantidade, xEggBacon);
+		
+		cardapio.put(OpcaoCardapio.X_BACON, xBacon);
+		
+		cardapio.put(OpcaoCardapio.X_BURGUER, xBurguer);
+		cardapio.put(OpcaoCardapio.X_EGG, xEgg);
+		cardapio.put(OpcaoCardapio.X_EGG_BACON, xEggBacon); 
+		
+		return cardapio;
 	}
 	
 	/** Monta o mapa de ingredientes disponíveis */

@@ -1,6 +1,7 @@
 package br.lanche.negocio.promocao;
 
 import br.lanche.dominio.OpcaoCardapio;
+import br.lanche.dominio.OpcaoIngrediente;
 
 /**
  * Interface do Designer Pattern Strategy
@@ -8,5 +9,5 @@ import br.lanche.dominio.OpcaoCardapio;
  *
  */
 public interface PromocaoStrategy {
-	public double calcularValorLanche(OpcaoCardapio opcao);
+	public double calcularValorLanche(OpcaoIngrediente opcao, OpcaoCardapio lanche);
 }

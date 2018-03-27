@@ -3,6 +3,12 @@ package br.lanche.dominio;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Entidade responsável por armazenar as informações do
+ * pedido realizado pelo cliente na lanchonete
+ * @author Herivelton
+ *
+ */
 public class Pedido {
 	
 	private int numero;
@@ -11,7 +17,7 @@ public class Pedido {
 	private Date dataCadastro;
 	
 	public Pedido() {
-		// TODO Auto-generated constructor stub
+	   this.dataCadastro = new Date();
 	}
 	
 	public int getNumero() {
