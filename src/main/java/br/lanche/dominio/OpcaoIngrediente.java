@@ -1,11 +1,15 @@
 package br.lanche.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Entidade associativa que liga uma opção
  * de pedido a mais de um ingrediente extra
  * @author Herivelton
  *
  */
+//Anotação utilizada para resolver o problema de lista circular
+@JsonIgnoreProperties({ "opcaoCardapio"})
 public class OpcaoIngrediente {
 
 	private OpcaoCardapio opcaoCardapio;

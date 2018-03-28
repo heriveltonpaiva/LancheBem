@@ -12,22 +12,6 @@ import br.lanche.dominio.OpcaoCardapio;
  *
  */
 public class CardapioBuilder {
-
-	public static void main (String[] args){
-		imprimirConsoleLanches();
-	}
-	
-	/** Método criado para impressão das opções do cardápio no console **/
-	private static void imprimirConsoleLanches(){
-		System.out.println("========================= CARDÁPIO DO LANCHE BEM  =========================");
-		for (OpcaoCardapio opcao : montarLanches().values()) {
-			System.out.println("OPÇÃO "+opcao.getId()+": "+opcao.getDescricao()+" R$: "+opcao.getValor());
-			System.out.println("Ingredientes:");
-			opcao.getIngredientes().stream().forEach(ingrediente -> System.out.println(""+ingrediente+","));
-			System.out.println("_________________________________________________________________________");
-
-		}
-	}
 	
 	/**
 	 * Método responsável por montar as opções disponível no 
@@ -35,7 +19,7 @@ public class CardapioBuilder {
 	 * Optei por criar um mapa de ingredientes e adiciona-los
 	 * na sua criação para reduzir o código e facilitar a leitura.
 	 */
-	public static Map<Integer,OpcaoCardapio> montarLanches(){
+	public Map<Integer,OpcaoCardapio> montarLanches(){
 		Map<Integer, Ingrediente> mapa = montarIngredientes();
 		Map<Integer, OpcaoCardapio> cardapio = new HashMap<>();
 		

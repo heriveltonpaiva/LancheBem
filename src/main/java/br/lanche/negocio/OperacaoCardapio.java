@@ -26,7 +26,8 @@ public class OperacaoCardapio {
 	}
 
 	private static void gerarPedidosComIngredientes() {
-		Map<Integer, OpcaoCardapio> lanches = CardapioBuilder.montarLanches();
+		CardapioBuilder builder = new CardapioBuilder();
+		Map<Integer, OpcaoCardapio> lanches = builder.montarLanches();
 		Map<Integer, Ingrediente> ingredientes = CardapioBuilder.montarIngredientes();
 		
 		
