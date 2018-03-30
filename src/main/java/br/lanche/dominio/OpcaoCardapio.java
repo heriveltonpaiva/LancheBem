@@ -3,11 +3,19 @@ package br.lanche.dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 /**
  * Entidade que representa a opção do cardápio
  * com a composição dos seus ingredientes
  * @author Herivelton
  */
+@Entity
 public class OpcaoCardapio{
 	
 	/** Constantes para auxiliar na leitura do código **/
@@ -16,12 +24,15 @@ public class OpcaoCardapio{
 	public final static int X_EGG = 3;
 	public final static int X_EGG_BACON = 4;
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id; 
 	private String descricao;
 	/** Valor final considerando as promoções **/
 	private double valor; 
 	/** Variável criada para guardar o valor original sem desconto **/
 	private double valorOriginal;
+	@OneToMany
 	private List<OpcaoIngrediente> ingredientes;
 	
 	public OpcaoCardapio() {

@@ -1,10 +1,17 @@
 package br.lanche.dominio;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * Entidade responsável por armazenar os 
  * ingredientes das opções do cardápio e os seus respectivos valores  
  * @author Herivelton 
  */
+
+@Entity
 public class Ingrediente {
 
 	/** Constantes para auxiliar na leitura do código, também
@@ -15,6 +22,8 @@ public class Ingrediente {
 	public final static int OVO = 4;
 	public final static int QUEIJO = 5;
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String descricao;
     private double valor;

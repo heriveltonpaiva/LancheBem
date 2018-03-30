@@ -1,5 +1,11 @@
 package br.lanche.dominio;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -10,9 +16,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 //Anotação utilizada para resolver o problema de lista circular
 @JsonIgnoreProperties({ "opcaoCardapio"})
+@Entity
 public class OpcaoIngrediente {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@ManyToOne
 	private OpcaoCardapio opcaoCardapio;
+	@ManyToOne
 	private Ingrediente ingrediente;
 	private int quantidade;
 	private double valorDesconto;
@@ -25,6 +37,12 @@ public class OpcaoIngrediente {
 		this.quantidade = qnt;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public OpcaoCardapio getOpcaoCardapio() {
 		return opcaoCardapio;
 	}
