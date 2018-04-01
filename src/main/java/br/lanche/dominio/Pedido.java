@@ -22,11 +22,10 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int numero;
-	@OneToMany
-	private List<OpcaoCardapio> opcoes;
 	private double valorTotal;
 	private Date dataCadastro;
-	
+	@ManyToOne
+	private OpcaoIngrediente opcaoIngrediente;
 	public Pedido() {
 	   this.dataCadastro = new Date();
 	}
@@ -42,17 +41,18 @@ public class Pedido {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public List<OpcaoCardapio> getOpcoes() {
-		return opcoes;
-	}
-	public void setOpcoes(List<OpcaoCardapio> opcoes) {
-		this.opcoes = opcoes;
-	}
+	
 	public double getValorTotal() {
 		return valorTotal;
 	}
 	public void setValorTotal(double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+	public OpcaoIngrediente getOpcaoIngrediente() {
+		return opcaoIngrediente;
+	}
+	public void setOpcaoIngrediente(OpcaoIngrediente opcaoIngrediente) {
+		this.opcaoIngrediente = opcaoIngrediente;
 	}
 	public Date getDataCadastro() {
 		return dataCadastro;

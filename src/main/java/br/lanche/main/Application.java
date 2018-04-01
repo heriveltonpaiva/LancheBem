@@ -44,8 +44,7 @@ public class Application {
 			
 		};
 	}
-
-
+    
 	private void carregarOpcoesCardapio() {
 		OpcaoCardapio xBacon = opcaoCardapioRepository.save(new OpcaoCardapio(1, "X-Bacon"));
 		carregarOpcaoIngrediente(xBacon, repository.findById(2));
@@ -66,6 +65,8 @@ public class Application {
 		carregarOpcaoIngrediente(xEggBacon, repository.findById(3));
 		carregarOpcaoIngrediente(xEggBacon, repository.findById(4));
 		carregarOpcaoIngrediente(xEggBacon, repository.findById(5));
+		
+		opcaoCardapioRepository.save(new OpcaoCardapio(5, "Customizado"));
 		
 		System.out.println("Opções iniciais do cardápio cadastrada com sucesso!");
 	}

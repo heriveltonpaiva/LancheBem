@@ -32,7 +32,7 @@ public class OpcaoCardapio{
 	private double valor; 
 	/** Variável criada para guardar o valor original sem desconto **/
 	private double valorOriginal;
-	@OneToMany
+	@Transient
 	private List<OpcaoIngrediente> ingredientes;
 	
 	public OpcaoCardapio() {
@@ -84,7 +84,14 @@ public class OpcaoCardapio{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((ingredientes == null) ? 0 : ingredientes.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(valor);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorOriginal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -97,9 +104,25 @@ public class OpcaoCardapio{
 		if (getClass() != obj.getClass())
 			return false;
 		OpcaoCardapio other = (OpcaoCardapio) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
 		if (id != other.id)
+			return false;
+		if (ingredientes == null) {
+			if (other.ingredientes != null)
+				return false;
+		} else if (!ingredientes.equals(other.ingredientes))
+			return false;
+		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
+			return false;
+		if (Double.doubleToLongBits(valorOriginal) != Double.doubleToLongBits(other.valorOriginal))
 			return false;
 		return true;
 	}
+    
+	
 	
 }

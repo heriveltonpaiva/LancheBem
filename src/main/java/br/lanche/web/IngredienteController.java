@@ -42,12 +42,6 @@ public class IngredienteController {
 		return ing;
 	}
 
-	@RequestMapping(value = "/ingrediente", method = RequestMethod.PUT)
-	public @ResponseBody Ingrediente update(@RequestBody Ingrediente ing) {
-		repository.save(ing);
-		return ing;
-	}
-
 	@RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.DELETE)
 	public HttpStatus delete(@PathVariable("id") int id) {
 		repository.delete(repository.findById(id));

@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.lanche.dominio.Pedido;
 import br.lanche.repository.PedidoRepository;
 /**
- * 
  * @author Herivelton
- *
  */
 @CrossOrigin
 @RestController
