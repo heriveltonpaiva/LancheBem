@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.lanche.dominio.OpcaoCardapio;
 import br.lanche.repository.OpcaoCardapioRepository;
 /**
- * 
- * @author Herivelton
- *
+ * Classe que fornece os serviços da opção do cardápio
+   @author Herivelton Paiva 
  */
 @CrossOrigin
 @RestController

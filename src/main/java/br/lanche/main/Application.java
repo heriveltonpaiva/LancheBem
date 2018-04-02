@@ -33,12 +33,9 @@ public class Application {
 	public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-	
-
 	@Bean
 	CommandLineRunner runner(){
-		return args -> {
-			
+		return args -> {		
 			carregarIngredientes();
 			carregarOpcoesCardapio();
 			

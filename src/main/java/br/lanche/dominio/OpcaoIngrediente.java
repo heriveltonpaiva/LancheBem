@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Herivelton
  *
  */
-//Anotação utilizada para resolver o problema de lista circular
 @Entity
 public class OpcaoIngrediente {
 

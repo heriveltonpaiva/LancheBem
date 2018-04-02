@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.lanche.dominio.OpcaoIngrediente;
 import br.lanche.repository.OpcaoIngredienteRepository;
 /**
- * 
- * @author Herivelton
- *
+ * Classe que fornece os serviços da associação do ingrediente x opcao
+ @author Herivelton Paiva 
  */
 @CrossOrigin
 @RestController
