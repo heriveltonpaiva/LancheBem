@@ -1,34 +1,25 @@
-# LancheBem
-Sistema para Vendas de Lanches
+## LancheBem
+Projeto back-end que fornece os serviços para um sistema de vendas.
 
-#Tecnologias Utilizadas: 
+Endereço do Client: https://github.com/heriveltonpaiva/lancheclient 
+
+### Tecnologias Utilizadas: 
 Java 8
-Spring Boot 1.5.10 (parent e web)
-Apache Tomcat/8.5.27 (Embarcado) 
+Spring Boot 1.5.10 
+Spring Data Rest 
+Sprint Data JPA
+h2database
 
+### Rodar o projeto 
+Tenha o Maven instalado, abra o prompt e rode o comando:
 
-## Detalhes Técnicos de Implementação 
-- Implementação da Lógica de cálculo para o valor do lanche 
-a) Caso seja a estratégia Carne ou Queijo será realizado alteração na entidade
-OpçãoIngrediente alterando o valorDesconto  
-b) Caso seja a estratégia Light, será dado o desconto de 10% considerando o atributo
-valorOriginal da entidade OpcaoCardapio 
+[SeuDiretorio]\lanchebem-master> mvn spring-boot:run 
 
-- calcularPromocaoDesconto(OpcaoCardapio lanche)
-Método responsável por realizar o cálculo dos lanches considerando as RN's 
+Após o maven baixar as dependências e construir o seu projeto os serviços estarão disponíveis
+para ser consumido via REST 
 
-- adicionarIngrediente(Ingrediente ingrediente, int qnt, OpcaoCardapio lanche)
-Método responsável por realizar a adição de 1 ingrediente ao lanche, 
-realizando os cálculos chamando o método calcularPromocaoDesconto(OpcaoCardapio lanche)
-quando necessário. 
+#### Consultando Ingredientes (JSON): 
+http://localhost:8080/ingredientes 
 
-- adicionarOpcaoAoPedido(OpcaoCardapio opcao, Pedido pedido)
-Método que adiciona uma opção do cardápio ao pedido realizado. 
-
-- OpcaoCardapio criarMontarMeuHamburguer(Ingrediente...opcaoIngrediente)
-O Método tem como finalizar realizar a confecção de um lanche de acordo
-com os ingredientes solicitados pelo cliente.
-
-- public class CardapioBuilder 
-Classe responsável por realizar a construção dos ingredientes com seus respectivos
-valores e as opções do cardápio. 
+#### Consultado Opções do Cardápio (JSON):
+http://localhost:8080/opcoesCardapio
