@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.lanche</groupId>
     <artifactId>LancheBem</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1</version>
     <packaging>war</packaging>
     <name>Lanche Bem</name>
     <description>Sistema da Lanchonete</description>
@@ -24,18 +24,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
+        <!-- Remoção do tomcat embarcado 
+	<dependency>
     		<groupId>org.apache.tomcat.embed</groupId>
     		<artifactId>tomcat-embed-jasper</artifactId>
     		<scope>provided</scope>
-		</dependency>
-		 <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-	        <groupId>org.springframework.data</groupId>
-	        <artifactId>spring-data-rest-webmvc</artifactId>
+	</dependency> -->
+	 <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-rest</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-rest-webmvc</artifactId>
     	</dependency>
     	<dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +51,7 @@
             <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
+   <!-- Não precisa fazer essa construção, quando usar o jenkins, pois é realizado pelo maven o build
     <build>
         <plugins>
             <plugin>
@@ -57,7 +59,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
    			 </plugin>
         </plugins>
-    </build>
+    </build> -->
     <repositories>
         <repository>
             <id>spring-releases</id>
