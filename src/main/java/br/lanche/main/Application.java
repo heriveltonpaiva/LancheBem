@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import br.lanche.dominio.Ingrediente;
 import br.lanche.dominio.OpcaoCardapio;
@@ -24,15 +26,22 @@ import br.lanche.repository.OpcaoIngredienteRepository;
 @EnableJpaRepositories(basePackages = {"br.lanche.repository"})
 @EntityScan(basePackages = {"br.lanche.dominio"})
 @SpringBootApplication
-public class Application {
+public class Application extends SpringBootServletInitializer{
 	
 	@Autowired IngredienteRepository repository;
 	@Autowired OpcaoIngredienteRepository opcaoRepository;
 	@Autowired OpcaoCardapioRepository opcaoCardapioRepository;
 	
 	public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+       	   SpringApplication.run(Application.class, args);
+    	}
+	
+	//Esse trecho é utilizando para o contexto de deploy war
+	@Override
+    	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+       	   return application.sources(Application.class);
+    	}
+	
 	@Bean
 	CommandLineRunner runner(){
 		return args -> {		
