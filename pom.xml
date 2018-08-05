@@ -5,8 +5,8 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.lanche</groupId>
-    <artifactId>LancheBem</artifactId>
-    <version>1</version>
+    <artifactId>lanchebem</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
     <name>Lanche Bem</name>
     <description>Sistema da Lanchonete</description>
@@ -24,6 +24,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+	    <!-- dependencia tomcat -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+		<scope>provided</scope>
+	</dependency>
         <!-- Remoção do tomcat embarcado 
 	<dependency>
     		<groupId>org.apache.tomcat.embed</groupId>
@@ -60,6 +66,15 @@
    			 </plugin>
         </plugins>
     </build> -->
+	<build>
+	<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
     <repositories>
         <repository>
             <id>spring-releases</id>
