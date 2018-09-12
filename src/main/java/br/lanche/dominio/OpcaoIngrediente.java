@@ -6,8 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
  * Entidade associativa que liga uma opção
  * de pedido a mais de um ingrediente extra

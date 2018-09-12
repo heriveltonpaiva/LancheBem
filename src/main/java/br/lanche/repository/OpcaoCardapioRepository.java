@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.lanche.dominio.Ingrediente;
 import br.lanche.dominio.OpcaoCardapio;
 
 @Repository
